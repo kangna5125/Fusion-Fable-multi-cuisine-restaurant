@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusion Fable — Multi Cuisine Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+</head>
+<body>
+    <div class="welcome-section">
+        <div class="content">
+            <h1>WELCOME</h1>
+            <p>To Our Multi Cuisine Restaurant</p>
+            <p>Bennett University, Plot No: 8-11, Tech Zone 5-11<br>Greater Noida - 201310</p>
+            <h2>YOU ONLY LIVE ONCE...<br>LICK THE BOWL!</h2>
+            <div class="buttons">
+                <a href="/starters">STARTERS</a>
+                <a href="/choose-cuisine">MAIN COURSE</a>
+                <a href="/dessert">DESSERT</a>
+            </div>
+            <p class="footer">Presented to you by Fusion Fable</p>
+        </div>
+        <img src="{{ url_for('static', filename='logo1.png') }}">
+    </div>
+    <div class="epicurean-section">
+        <div class="content">
+            <h1>EPICUREAN</h1>
+            <p>[Ep-ih-KOOR-ree-an] . noun</p>
+            <p>Someone who enjoys and seeks out luxurious, pleasurable, or refined experiences, especially when it comes to food and drink.</p>
+            <h2>"EVER WONDERED IF YOU'RE READY TO BECOME AN EPICUREAN AND INDULGE IN THE FINEST FLAVOURS LIFE HAS TO OFFER?"</h2>
+        </div>
+        <img src="{{ url_for('static', filename='logo2.png') }}">
+    </div>
+</body>
+</html>

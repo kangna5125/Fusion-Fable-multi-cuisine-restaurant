@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} — Fusion Fable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='menu_page.css') }}">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="{{ back }}" class="back-btn">← Back</a>
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="header-right">
+      {% if session.get('user') %}
+        <a href="{{ url_for('view_cart') }}" class="cart-btn">🛒 Cart ({{ cart_count() }})</a>
+        <span class="user-tag">👤 {{ session['user'] }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="login-link">Login to Order</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for cat, msg in messages %}
+          <div class="flash flash-{{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main class="menu-grid">
+    {% for item in items %}
+    <div class="menu-card">
+      <img src="{{ url_for('static', filename=item.img) }}" alt="{{ item.name }}">
+      <div class="menu-card-body">
+        <p class="item-name">{{ item.name }}</p>
+        <p class="item-price">₹{{ item.price }}</p>
+        {% if session.get('user') %}
+        <form action="{{ url_for('add_to_cart') }}" method="POST" class="add-form">
+          <input type="hidden" name="name"  value="{{ item.name }}">
+          <input type="hidden" name="price" value="{{ item.price }}">
+          <input type="hidden" name="img"   value="{{ item.img }}">
+          <div class="qty-row">
+            <label>Qty:</label>
+            <input type="number" name="qty" value="1" min="1" max="20" class="qty-input">
+            <button type="submit" class="add-btn">Add to Cart</button>
+          </div>
+        </form>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="login-to-order">Login to Order</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </main>
+</body>
+</html>

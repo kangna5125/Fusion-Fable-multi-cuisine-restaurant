@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Cuisine Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static1.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Starters</h1>
+            <a href="/" class="back-btn">Back to Home</a>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h2>Veg Starters</h2>
+                <img src="{{ url_for('static', filename='logo3.png') }}">
+                <a href="/vegstarters" class="btn">View Veg Starters</a>
+            </div>
+            <div class="card">
+                <h2>Non-Veg Starters</h2>
+                <img src="{{ url_for('static', filename='logo4.png') }}">
+                <a href="/non-vegstarters" class="btn">View Non-Veg Starters</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

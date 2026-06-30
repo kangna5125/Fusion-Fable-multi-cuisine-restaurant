@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Cuisine — Fusion Fable</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a00 0%, #3b1a00 50%, #1a0a00 100%);
+            font-family: 'Lato', sans-serif;
+            color: #f5e6c8;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            background: rgba(0,0,0,0.5);
+            border-bottom: 1px solid #c8962a;
+        }
+        .top-bar a { color: #f0c060; text-decoration: none; font-size: 0.9rem; }
+        .top-bar a:hover { text-decoration: underline; }
+        .top-bar .right { display: flex; gap: 18px; align-items: center; }
+        .top-bar .cart-btn {
+            background: #c8962a;
+            color: #1a0a00;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        h1.page-title {
+            font-family: 'Cinzel Decorative', cursive;
+            text-align: center;
+            font-size: 2.2rem;
+            color: #f0c060;
+            padding: 50px 20px 12px;
+            letter-spacing: 3px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #c8a870;
+            font-size: 1rem;
+            margin-bottom: 50px;
+        }
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px 60px;
+        }
+        .cuisine-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(200,150,42,0.35);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.25s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .cuisine-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(200,150,42,0.3);
+            border-color: #f0c060;
+        }
+        .cuisine-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .cuisine-card-body {
+            padding: 20px;
+        }
+        .cuisine-card-body .emoji { font-size: 1.8rem; }
+        .cuisine-card-body h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.3rem;
+            color: #f0c060;
+            margin: 8px 0 6px;
+        }
+        .cuisine-card-body p {
+            font-size: 0.88rem;
+            color: #c8a870;
+            line-height: 1.5;
+        }
+        .explore-btn {
+            display: inline-block;
+            margin-top: 14px;
+            background: #c8962a;
+            color: #1a0a00;
+            padding: 8px 22px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="/">← Back to Home</a>
+        <div class="right">
+            {% if session.get('user') %}
+                <a href="{{ url_for('view_cart') }}" class="cart-btn">🛒 Cart ({{ cart_count() }})</a>
+                <span>👤 {{ session['user'] }}</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login to Order</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="max-width:800px;margin:20px auto;padding:0 20px;">
+          {% for cat, msg in messages %}
+            <div style="background:rgba(200,150,42,0.2);border:1px solid #c8962a;border-radius:8px;padding:10px 16px;margin-bottom:8px;">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h1 class="page-title">Choose Your Cuisine</h1>
+    <p class="subtitle">Explore flavours from around the world</p>
+
+    <div class="cuisine-grid">
+        {% for cid, cuisine in cuisines.items() %}
+        <a href="/cuisine/{{ cid }}" class="cuisine-card">
+            <img src="{{ url_for('static', filename=cuisine.banner) }}" alt="{{ cuisine.name }} cuisine">
+            <div class="cuisine-card-body">
+                <div class="emoji">{{ cuisine.emoji }}</div>
+                <h2>{{ cuisine.name }}</h2>
+                <p>{{ cuisine.tagline }}</p>
+                <span class="explore-btn">Explore Menu →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

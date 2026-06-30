@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart — Fusion Fable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
+</head>
+<body>
+  <header class="header">
+    <a href="{{ url_for('home') }}" class="back-btn">← Back to Menu</a>
+    <h1>Your Cart</h1>
+    <span class="user-tag">👤 {{ session['user'] }}</span>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for cat, msg in messages %}
+          <div class="flash flash-{{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% if cart %}
+  <main class="cart-container">
+    <div class="cart-items">
+      {% for name, item in cart.items() %}
+      <div class="cart-row">
+        <img src="{{ url_for('static', filename=item.img) }}" alt="{{ name }}" class="cart-img">
+        <div class="cart-item-info">
+          <p class="cart-item-name">{{ name }}</p>
+          <p class="cart-item-unit">₹{{ item.price }} per plate</p>
+        </div>
+        <div class="cart-controls">
+          <form action="{{ url_for('update_cart') }}" method="POST" class="qty-form">
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="number" name="qty" value="{{ item.qty }}" min="0" max="20" class="qty-input">
+            <button type="submit" class="btn-update">Update</button>
+          </form>
+          <form action="{{ url_for('remove_from_cart') }}" method="POST">
+            <input type="hidden" name="name" value="{{ name }}">
+            <button type="submit" class="btn-remove">✕ Remove</button>
+          </form>
+        </div>
+        <p class="cart-item-total">₹{{ item.price * item.qty }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="summary-row"><span>Subtotal</span><span>₹{{ subtotal }}</span></div>
+      <div class="summary-row"><span>GST (5%)</span><span>₹{{ gst }}</span></div>
+      <div class="summary-row total-row"><span>Total</span><span>₹{{ total }}</span></div>
+
+      <form action="{{ url_for('place_order') }}" method="POST">
+        <button type="submit" class="btn-order">Place Order →</button>
+      </form>
+      <a href="{{ url_for('home') }}" class="btn-continue">+ Add More Items</a>
+    </div>
+  </main>
+
+  {% else %}
+  <div class="empty-cart">
+    <p>🍽️ Your cart is empty.</p>
+    <a href="{{ url_for('home') }}" class="btn-continue">Browse Menu</a>
+  </div>
+  {% endif %}
+</body>
+</html>

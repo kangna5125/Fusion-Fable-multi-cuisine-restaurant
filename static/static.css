@@ -1,0 +1,65 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Cinzel Decorative', sans-serif;
+    background-color:  #d4a855;
+    color: #352218;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Welcome Section */
+.welcome-section, .epicurean-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.welcome-section .content, .epicurean-section .content {
+    max-width: 50%;
+}
+
+.welcome-section img, .epicurean-section img {
+    max-width: 30%;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    background-color: #5c3d2e;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.buttons a:hover {
+    background-color: #8b5e3c;
+}
+
+/* Footer Note */
+.footer {
+    font-style: italic;
+    margin-top: 100px;
+}

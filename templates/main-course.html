@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Cuisine Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static3.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <div class="sidebar">
+            <h1>MAIN COURSE</h1>
+            <a href="/" class="back-btn">Back to Home</a>
+        </div>
+        <div class="menu-container">
+            <div class="menu-item">
+                <h2>Indian Veg Dishes</h2>
+                <img src="{{ url_for('static', filename='7.jpg') }}">
+                <a href="/IndianVegDishes" class="btn">Indian Veg Dishes</a>
+            </div>
+            <div class="menu-item">
+                <h2>Indian Non Veg Dishes</h2>
+                <img src="{{ url_for('static', filename='8.jpg') }}">
+                <a href="/IndianNonVegDishes" class="btn">Indian Non Veg Dishes</a>
+            </div>
+            <div class="menu-item">
+                <h2>Chinese Dishes</h2>
+                <img src="{{ url_for('static', filename='9.jpg') }}">
+                <a href="/ChineseDishes" class="btn">Chinese Dishes</a>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

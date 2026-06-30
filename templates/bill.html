@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — Fusion Fable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='bill.css') }}">
+</head>
+<body>
+  <div class="bill-wrapper">
+    <div class="bill-card">
+
+      <div class="bill-header">
+        <h1>Fusion Fable</h1>
+        <p>Bennett University, Greater Noida</p>
+        <div class="confirmed-badge">✅ Order Confirmed!</div>
+      </div>
+
+      <div class="bill-meta">
+        <div class="meta-row"><span>Order ID</span><strong>{{ order['order_id'] }}</strong></div>
+        <div class="meta-row"><span>Customer</span><strong>{{ order['customer'] }}</strong></div>
+        <div class="meta-row"><span>Date & Time</span><strong>{{ order['order_time'] }}</strong></div>
+      </div>
+
+      <hr class="divider">
+
+      <table class="bill-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for name, item in order['items'].items() %}
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ item['qty'] }}</td>
+            <td>₹{{ item['price'] }}</td>
+            <td>₹{{ item['price'] * item['qty'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <hr class="divider">
+
+      <div class="bill-totals">
+        <div class="total-row"><span>Subtotal</span><span>₹{{ order['subtotal'] }}</span></div>
+        <div class="total-row"><span>GST (5%)</span><span>₹{{ order['gst'] }}</span></div>
+        <div class="total-row grand"><span>Grand Total</span><span>₹{{ order['total'] }}</span></div>
+      </div>
+
+      <div class="bill-footer">
+        <p>Thank you for dining with us! 🍽️</p>
+        <p><em>"You Only Live Once... Lick the Bowl!"</em></p>
+      </div>
+
+      <div class="bill-actions">
+        <button onclick="window.print()" class="btn-print">🖨️ Print Bill</button>
+        <a href="{{ url_for('home') }}" class="btn-home">← Back to Menu</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
